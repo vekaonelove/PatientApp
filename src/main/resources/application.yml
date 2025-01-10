@@ -4,16 +4,16 @@
 server:
   port: 8080
   servlet:
-    context-path: /api
+    context-path: /
 
 # ----------------------
 # DATABASE CONFIGURATION
 # ----------------------
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/patient?createDatabaseIfNotExist=true
-    username: root
-    password: 1234
+    url: jdbc:mysql://${HOST:localhost}:${PORT:3306}/patient?createDatabaseIfNotExist=true
+    username: ${USER:root}
+    password: ${PASSWORD:1234}
   jpa:
     hibernate:
       ddl-auto: update
