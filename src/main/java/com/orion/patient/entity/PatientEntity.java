@@ -1,10 +1,8 @@
-package com.orion.patient.dao;
+package com.orion.patient.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -14,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "patients")
-public class PatientDAO {
+public class PatientEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

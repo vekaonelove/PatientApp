@@ -21,6 +21,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+    open-in-view: true
 
   # ----------------------
   # LIQUIBASE CONFIGURATION

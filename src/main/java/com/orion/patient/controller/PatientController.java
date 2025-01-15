@@ -19,13 +19,13 @@ public class PatientController {
 
     @GetMapping
     public ResponseEntity<List<PatientDTO>> getAllPatients() {
-        List<PatientDTO> patients = patientService.getAllPatients();
+        List<PatientDTO> patients = patientService.findAll();
         return new ResponseEntity<>(patients, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PatientDTO> getPatientById(@PathVariable Long id) {
-        Optional<PatientDTO> patientDTO = patientService.getPatientById(id);
+        Optional<PatientDTO> patientDTO = patientService.findById(id);
         return patientDTO
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -33,7 +33,7 @@ public class PatientController {
 
     @PostMapping
     public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
-        PatientDTO createdPatient = patientService.createPatient(patientDTO);
+        PatientDTO createdPatient = patientService.save(patientDTO);
         return new ResponseEntity<>(createdPatient, HttpStatus.CREATED);
     }
 }

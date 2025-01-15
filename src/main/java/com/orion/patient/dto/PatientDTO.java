@@ -1,24 +1,17 @@
 package com.orion.patient.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.Date;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class PatientDTO {
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private Date birthDate;
-    private String gender;
-    private String phoneNumber;
-    private Long ssn;
-    private String countryName;
-    private Long cityId;
-    private String address;
-    private Long contactId;
-}
+public record PatientDTO(
+        Long id,
+        String firstName,
+        String lastName,
+        Date birthDate,
+        String gender,
+        String phoneNumber,
+        Long ssn,
+        String countryName,
+        Long cityId,
+        String address,
+        Long contactId
+) {}
