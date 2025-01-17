@@ -47,4 +47,7 @@ public class PatientEntity {
 
     @Column(name = "contact_id", nullable = false)
     private Long contactId;
+
+    @Column(name = "email", nullable = false)
+    private String email;
 }

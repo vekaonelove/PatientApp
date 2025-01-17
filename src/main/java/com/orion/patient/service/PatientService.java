@@ -40,4 +40,8 @@ public class PatientService {
         PatientEntity savedPatient = patientRepository.save(patientEntity);
         return patientMapper.toDTO(savedPatient);
     }
+
+    public boolean patientExists(PatientDTO patientDTO) {
+        return patientRepository.existsByEmailOrPhoneNumber(patientDTO.email(), patientDTO.phoneNumber());
+    }
 }

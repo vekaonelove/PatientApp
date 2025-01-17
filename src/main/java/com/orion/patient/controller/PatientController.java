@@ -1,6 +1,7 @@
 package com.orion.patient.controller;
 
 import com.orion.patient.dto.PatientDTO;
+import com.orion.patient.mapper.PatientMapper;
 import com.orion.patient.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
