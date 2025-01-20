@@ -1,17 +1,13 @@
 package com.orion.patient.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.*;
 import jakarta.persistence.*;
-
+import lombok.*;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "patients")
+@Entity(name="patients")
 public class PatientEntity {
 
     @Id
@@ -36,18 +32,21 @@ public class PatientEntity {
     @Column(name = "ssn", nullable = false)
     private Long ssn;
 
-    @Column(name = "country_name", nullable = false)
-    private String countryName;
-
-    @Column(name = "city_id")
-    private Long cityId;
+    @Column(name = "email", nullable = false)
+    private String email;
 
     @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "contact_id", nullable = false)
-    private Long contactId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "country_name", referencedColumnName = "name")
+    private CountryEntity country;
 
-    @Column(name = "email", nullable = false)
-    private String email;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private CityEntity city;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contact_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private EmergencyContactEntity contact;
 }

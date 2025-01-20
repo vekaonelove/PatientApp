@@ -5,7 +5,7 @@ import jakarta.validation.constraints.PastOrPresent;
 import java.time.Instant;
 
 public record StatusRecordDTO(
-        Integer id,
+        Long id,
         Long patientId,
         String statusName,
 

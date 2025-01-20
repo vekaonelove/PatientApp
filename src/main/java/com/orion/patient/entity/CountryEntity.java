@@ -5,17 +5,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "countries")
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "countries")
 public class CountryEntity {
     @Id
-    @Size(max = 255)
     @Column(name = "name", nullable = false)
     private String name;
-
 }

@@ -4,7 +4,7 @@ import com.orion.patient.dto.PaymentTypeDTO;
 import com.orion.patient.entity.PaymentTypeEntity;
 import com.orion.patient.mapper.PaymentTypeMapper;
 import com.orion.patient.repository.PaymentTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,6 @@ public class PaymentTypeService {
     private final PaymentTypeRepository paymentTypeRepository;
     private final PaymentTypeMapper paymentTypeMapper;
 
-    @Autowired
     public PaymentTypeService(PaymentTypeRepository paymentTypeRepository, PaymentTypeMapper paymentTypeMapper) {
         this.paymentTypeRepository = paymentTypeRepository;
         this.paymentTypeMapper = paymentTypeMapper;
@@ -39,6 +38,13 @@ public class PaymentTypeService {
         PaymentTypeEntity paymentTypeEntity = paymentTypeMapper.toEntity(paymentTypeDTO);
         PaymentTypeEntity savedPaymentType = paymentTypeRepository.save(paymentTypeEntity);
         return paymentTypeMapper.toDTO(savedPaymentType);
+    }
+
+    public PaymentTypeDTO update(String type, @Valid PaymentTypeDTO paymentTypeDTO) {
+        PaymentTypeEntity paymentTypeEntity = paymentTypeMapper.toEntity(paymentTypeDTO);
+        paymentTypeEntity.setType(type);
+        PaymentTypeEntity updatedEntity = paymentTypeRepository.save(paymentTypeEntity);
+        return paymentTypeMapper.toDTO(updatedEntity);
     }
 
     public void delete(String type) {

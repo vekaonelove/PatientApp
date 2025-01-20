@@ -4,9 +4,8 @@ import com.orion.patient.dto.EmergencyContactDTO;
 import com.orion.patient.entity.EmergencyContactEntity;
 import com.orion.patient.mapper.EmergencyContactMapper;
 import com.orion.patient.repository.EmergencyContactRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,7 +16,6 @@ public class EmergencyContactService {
     private final EmergencyContactRepository emergencyContactRepository;
     private final EmergencyContactMapper emergencyContactMapper;
 
-    @Autowired
     public EmergencyContactService(EmergencyContactRepository emergencyContactRepository, EmergencyContactMapper emergencyContactMapper) {
         this.emergencyContactRepository = emergencyContactRepository;
         this.emergencyContactMapper = emergencyContactMapper;
@@ -41,7 +39,7 @@ public class EmergencyContactService {
         return emergencyContactMapper.toDTO(savedEntity);
     }
 
-    public EmergencyContactDTO update(Long id, EmergencyContactDTO emergencyContactDTO) {
+    public EmergencyContactDTO update(Long id, @Valid EmergencyContactDTO emergencyContactDTO) {
         if (!emergencyContactRepository.existsById(id)) {
             return null;
         }

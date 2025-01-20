@@ -4,7 +4,7 @@ import com.orion.patient.dto.CityDTO;
 import com.orion.patient.entity.CityEntity;
 import com.orion.patient.mapper.CityMapper;
 import com.orion.patient.repository.CityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,6 @@ public class CityService {
     private final CityRepository cityRepository;
     private final CityMapper cityMapper;
 
-    @Autowired
     public CityService(CityRepository cityRepository, CityMapper cityMapper) {
         this.cityRepository = cityRepository;
         this.cityMapper = cityMapper;
@@ -41,10 +40,7 @@ public class CityService {
         return cityMapper.toDTO(savedCity);
     }
 
-    public CityDTO update(Long id, CityDTO cityDTO) {
-        if (!cityRepository.existsById(id)) {
-            return null;
-        }
+    public CityDTO update(Long id, @Valid CityDTO cityDTO) {
         CityEntity cityEntity = cityMapper.toEntity(cityDTO);
         cityEntity.setId(id);
         CityEntity updatedCity = cityRepository.save(cityEntity);

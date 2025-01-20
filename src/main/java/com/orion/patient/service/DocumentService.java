@@ -4,7 +4,7 @@ import com.orion.patient.dto.DocumentDTO;
 import com.orion.patient.entity.DocumentEntity;
 import com.orion.patient.mapper.DocumentMapper;
 import com.orion.patient.repository.DocumentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,6 @@ public class DocumentService {
     private final DocumentRepository documentRepository;
     private final DocumentMapper documentMapper;
 
-    @Autowired
     public DocumentService(DocumentRepository documentRepository, DocumentMapper documentMapper) {
         this.documentRepository = documentRepository;
         this.documentMapper = documentMapper;
@@ -41,10 +40,7 @@ public class DocumentService {
         return documentMapper.toDTO(savedDocument);
     }
 
-    public DocumentDTO update(Long id, DocumentDTO documentDTO) {
-        if (!documentRepository.existsById(id)) {
-            return null;
-        }
+    public DocumentDTO update(Long id, @Valid DocumentDTO documentDTO) {
         DocumentEntity documentEntity = documentMapper.toEntity(documentDTO);
         documentEntity.setId(id);
         DocumentEntity updatedDocument = documentRepository.save(documentEntity);

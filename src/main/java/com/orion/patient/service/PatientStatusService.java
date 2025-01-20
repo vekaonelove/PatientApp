@@ -4,9 +4,8 @@ import com.orion.patient.dto.PatientStatusDTO;
 import com.orion.patient.entity.PatientStatusEntity;
 import com.orion.patient.mapper.PatientStatusMapper;
 import com.orion.patient.repository.PatientStatusRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,7 +16,6 @@ public class PatientStatusService {
     private final PatientStatusRepository patientStatusRepository;
     private final PatientStatusMapper patientStatusMapper;
 
-    @Autowired
     public PatientStatusService(PatientStatusRepository patientStatusRepository, PatientStatusMapper patientStatusMapper) {
         this.patientStatusRepository = patientStatusRepository;
         this.patientStatusMapper = patientStatusMapper;
@@ -41,10 +39,7 @@ public class PatientStatusService {
         return patientStatusMapper.toDTO(savedPatientStatus);
     }
 
-    public PatientStatusDTO update(String status, PatientStatusDTO patientStatusDTO) {
-        if (!patientStatusRepository.existsById(status)) {
-            return null;
-        }
+    public PatientStatusDTO update(String status, @Valid PatientStatusDTO patientStatusDTO) {
         PatientStatusEntity patientStatusEntity = patientStatusMapper.toEntity(patientStatusDTO);
         patientStatusEntity.setStatus(status);
         PatientStatusEntity updatedPatientStatus = patientStatusRepository.save(patientStatusEntity);

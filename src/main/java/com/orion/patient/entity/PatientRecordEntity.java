@@ -2,14 +2,17 @@ package com.orion.patient.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
 @Getter
 @Setter
-@Entity
-@Table(name = "patients_records")
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "patient_records")
 public class PatientRecordEntity {
     @Id
     @Column(name = "id", nullable = false)

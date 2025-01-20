@@ -4,9 +4,8 @@ import com.orion.patient.dto.PaymentDTO;
 import com.orion.patient.entity.PaymentEntity;
 import com.orion.patient.mapper.PaymentMapper;
 import com.orion.patient.repository.PaymentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,7 +16,6 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final PaymentMapper paymentMapper;
 
-    @Autowired
     public PaymentService(PaymentRepository paymentRepository, PaymentMapper paymentMapper) {
         this.paymentRepository = paymentRepository;
         this.paymentMapper = paymentMapper;
@@ -41,10 +39,7 @@ public class PaymentService {
         return paymentMapper.toDTO(savedPayment);
     }
 
-    public PaymentDTO update(Long id, PaymentDTO paymentDTO) {
-        if (!paymentRepository.existsById(id)) {
-            return null;
-        }
+    public PaymentDTO update(Long id, @Valid PaymentDTO paymentDTO) {
         PaymentEntity paymentEntity = paymentMapper.toEntity(paymentDTO);
         paymentEntity.setId(id);
         PaymentEntity updatedPayment = paymentRepository.save(paymentEntity);

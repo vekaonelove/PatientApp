@@ -5,13 +5,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "document_types")
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "document_types")
 public class DocumentTypeEntity {
     @Id
     @Size(max = 255)

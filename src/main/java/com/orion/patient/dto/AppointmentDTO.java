@@ -10,7 +10,7 @@ public record AppointmentDTO(
         Long doctorId,
         Long clinicId,
 
-        @FutureOrPresent
+        @FutureOrPresent(message = "Date should be in present or future")
         Instant appointmentDate
 ) {
 }

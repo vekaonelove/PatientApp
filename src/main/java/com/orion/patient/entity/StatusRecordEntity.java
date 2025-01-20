@@ -1,19 +1,22 @@
 package com.orion.patient.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "statuses_records")
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "status_records")
 public class StatusRecordEntity {
     @Id
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")

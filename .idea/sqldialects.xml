@@ -2,6 +2,5 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/1c59201b-b51d-45d3-8bdb-972e795f54e0/console.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/db/changelog/2025-01-10-create-changelog.xml" dialect="MySQL" />
   </component>
 </project>

@@ -3,13 +3,16 @@ package com.orion.patient.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "emergency_contacts")
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "emergency_contacts")
 public class EmergencyContactEntity {
     @Id
     @Column(name = "id", nullable = false)

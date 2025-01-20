@@ -4,9 +4,8 @@ import com.orion.patient.dto.PatientRecordDTO;
 import com.orion.patient.entity.PatientRecordEntity;
 import com.orion.patient.mapper.PatientRecordMapper;
 import com.orion.patient.repository.PatientRecordRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,7 +16,6 @@ public class PatientRecordService {
     private final PatientRecordRepository patientRecordRepository;
     private final PatientRecordMapper patientRecordMapper;
 
-    @Autowired
     public PatientRecordService(PatientRecordRepository patientRecordRepository, PatientRecordMapper patientRecordMapper) {
         this.patientRecordRepository = patientRecordRepository;
         this.patientRecordMapper = patientRecordMapper;
@@ -41,10 +39,7 @@ public class PatientRecordService {
         return patientRecordMapper.toDTO(savedEntity);
     }
 
-    public PatientRecordDTO update(Long id, PatientRecordDTO patientRecordDTO) {
-        if (!patientRecordRepository.existsById(id)) {
-            return null;
-        }
+    public PatientRecordDTO update(Long id, @Valid PatientRecordDTO patientRecordDTO) {
         PatientRecordEntity patientRecordEntity = patientRecordMapper.toEntity(patientRecordDTO);
         patientRecordEntity.setId(id);
         PatientRecordEntity updatedEntity = patientRecordRepository.save(patientRecordEntity);

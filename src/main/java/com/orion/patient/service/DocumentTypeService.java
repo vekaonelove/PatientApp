@@ -4,7 +4,7 @@ import com.orion.patient.dto.DocumentTypeDTO;
 import com.orion.patient.entity.DocumentTypeEntity;
 import com.orion.patient.mapper.DocumentTypeMapper;
 import com.orion.patient.repository.DocumentTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,6 @@ public class DocumentTypeService {
     private final DocumentTypeRepository documentTypeRepository;
     private final DocumentTypeMapper documentTypeMapper;
 
-    @Autowired
     public DocumentTypeService(DocumentTypeRepository documentTypeRepository, DocumentTypeMapper documentTypeMapper) {
         this.documentTypeRepository = documentTypeRepository;
         this.documentTypeMapper = documentTypeMapper;
@@ -41,10 +40,7 @@ public class DocumentTypeService {
         return documentTypeMapper.toDTO(savedDocumentType);
     }
 
-    public DocumentTypeDTO update(String type, DocumentTypeDTO documentTypeDTO) {
-        if (!documentTypeRepository.existsById(type)) {
-            return null;
-        }
+    public DocumentTypeDTO update(String type, @Valid DocumentTypeDTO documentTypeDTO) {
         DocumentTypeEntity documentTypeEntity = documentTypeMapper.toEntity(documentTypeDTO);
         documentTypeEntity.setType(type);
         DocumentTypeEntity updatedDocumentType = documentTypeRepository.save(documentTypeEntity);

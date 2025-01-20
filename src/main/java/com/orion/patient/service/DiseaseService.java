@@ -4,7 +4,7 @@ import com.orion.patient.dto.DiseaseDTO;
 import com.orion.patient.entity.DiseaseEntity;
 import com.orion.patient.mapper.DiseaseMapper;
 import com.orion.patient.repository.DiseaseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,6 @@ public class DiseaseService {
     private final DiseaseRepository diseaseRepository;
     private final DiseaseMapper diseaseMapper;
 
-    @Autowired
     public DiseaseService(DiseaseRepository diseaseRepository, DiseaseMapper diseaseMapper) {
         this.diseaseRepository = diseaseRepository;
         this.diseaseMapper = diseaseMapper;
@@ -41,10 +40,7 @@ public class DiseaseService {
         return diseaseMapper.toDTO(savedDisease);
     }
 
-    public DiseaseDTO update(Long id, DiseaseDTO diseaseDTO) {
-        if (!diseaseRepository.existsById(id)) {
-            return null;
-        }
+    public DiseaseDTO update(Long id, @Valid DiseaseDTO diseaseDTO) {
         DiseaseEntity diseaseEntity = diseaseMapper.toEntity(diseaseDTO);
         diseaseEntity.setId(id);
         DiseaseEntity updatedDisease = diseaseRepository.save(diseaseEntity);

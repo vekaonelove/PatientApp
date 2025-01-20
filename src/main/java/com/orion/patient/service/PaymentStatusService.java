@@ -4,9 +4,8 @@ import com.orion.patient.dto.PaymentStatusDTO;
 import com.orion.patient.entity.PaymentStatusEntity;
 import com.orion.patient.mapper.PaymentStatusMapper;
 import com.orion.patient.repository.PaymentStatusRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,7 +16,6 @@ public class PaymentStatusService {
     private final PaymentStatusRepository paymentStatusRepository;
     private final PaymentStatusMapper paymentStatusMapper;
 
-    @Autowired
     public PaymentStatusService(PaymentStatusRepository paymentStatusRepository, PaymentStatusMapper paymentStatusMapper) {
         this.paymentStatusRepository = paymentStatusRepository;
         this.paymentStatusMapper = paymentStatusMapper;
@@ -39,6 +37,13 @@ public class PaymentStatusService {
         PaymentStatusEntity paymentStatusEntity = paymentStatusMapper.toEntity(paymentStatusDTO);
         PaymentStatusEntity savedPaymentStatus = paymentStatusRepository.save(paymentStatusEntity);
         return paymentStatusMapper.toDTO(savedPaymentStatus);
+    }
+
+    public PaymentStatusDTO update(String status, @Valid PaymentStatusDTO paymentStatusDTO) {
+        PaymentStatusEntity paymentStatusEntity = paymentStatusMapper.toEntity(paymentStatusDTO);
+        paymentStatusEntity.setStatus(status);
+        PaymentStatusEntity updatedEntity = paymentStatusRepository.save(paymentStatusEntity);
+        return paymentStatusMapper.toDTO(updatedEntity);
     }
 
     public void delete(String status) {

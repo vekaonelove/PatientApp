@@ -4,7 +4,7 @@ import com.orion.patient.dto.CountryDTO;
 import com.orion.patient.entity.CountryEntity;
 import com.orion.patient.mapper.CountryMapper;
 import com.orion.patient.repository.CountryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,6 @@ public class CountryService {
     private final CountryRepository countryRepository;
     private final CountryMapper countryMapper;
 
-    @Autowired
     public CountryService(CountryRepository countryRepository, CountryMapper countryMapper) {
         this.countryRepository = countryRepository;
         this.countryMapper = countryMapper;
@@ -41,13 +40,7 @@ public class CountryService {
         return countryMapper.toDTO(savedCountry);
     }
 
-    public CountryDTO update(String name, CountryDTO countryDTO) {
-        Optional<CountryEntity> existingCountry = Optional.ofNullable(countryRepository.findByName(name));
-
-        if (existingCountry.isEmpty()) {
-            return null;
-        }
-
+    public CountryDTO update(String name, @Valid CountryDTO countryDTO) {
         CountryEntity countryEntity = countryMapper.toEntity(countryDTO);
         countryEntity.setName(name);
         CountryEntity updatedCountry = countryRepository.save(countryEntity);

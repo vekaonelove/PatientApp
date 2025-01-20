@@ -1,16 +1,18 @@
 package com.orion.patient.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "payments")
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "payments")
 public class PaymentEntity {
+
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
@@ -19,13 +21,12 @@ public class PaymentEntity {
     @JoinColumn(name = "appointment_id")
     private AppointmentEntity appointment;
 
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "status_name", nullable = false)
-    private String statusName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_name", referencedColumnName = "status", nullable = false)
+    private PaymentStatusEntity paymentStatus;
 
-    @Size(max = 255)
-    @Column(name = "payment_type")
-    private String paymentType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "payment_type", referencedColumnName = "type")
+    private PaymentTypeEntity paymentType;
 
 }
