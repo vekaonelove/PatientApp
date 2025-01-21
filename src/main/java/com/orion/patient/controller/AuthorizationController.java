@@ -1,19 +1,17 @@
 package com.orion.patient.controller;
 
 import com.orion.patient.dto.PatientDTO;
+import com.orion.patient.dto.PatientLoginDTO;
 import com.orion.patient.service.PatientService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping()
 public class AuthorizationController {
 
     private final PatientService patientService;
-
     public AuthorizationController(PatientService patientService) {
         this.patientService = patientService;
     }
@@ -23,11 +21,9 @@ public class AuthorizationController {
             @RequestHeader("Authorization") String authorizationHeader,
             @Valid @RequestBody PatientDTO patientDTO) {
 
-        if (authorizationHeader == null || authorizationHeader.isBlank() || !authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader == null || authorizationHeader.isBlank()){
             return ResponseEntity.status(401).body("Missing or invalid Authorization token");
         }
-
-        String token = authorizationHeader.substring(7); //without Bearer
 
         if (patientService.patientExists(patientDTO)) {
             return ResponseEntity.badRequest().body("Patient already exists");
@@ -36,6 +32,7 @@ public class AuthorizationController {
         patientService.save(patientDTO);
         return ResponseEntity.ok("Patient registered successfully");
     }
+
 
     @GetMapping("/me")
     public ResponseEntity<?> getPatientProfile(
@@ -46,11 +43,7 @@ public class AuthorizationController {
             return ResponseEntity.status(401).body("Missing or invalid Authorization token");
         }
 
-        Optional<PatientDTO> patientDTO = patientService.findById(id);
-        if (patientDTO.isEmpty()) {
-            return ResponseEntity.status(404).body("Patient not found");
-        }
-
-        return ResponseEntity.ok(patientDTO.get());
+        PatientDTO patientDTO = patientService.findById(id);
+        return ResponseEntity.ok(patientDTO);
     }
 }

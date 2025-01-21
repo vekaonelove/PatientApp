@@ -2,12 +2,13 @@ package com.orion.patient.service;
 
 import com.orion.patient.dto.PatientDTO;
 import com.orion.patient.entity.PatientEntity;
+import com.orion.patient.util.exception.DuplicatePatientException;
+import com.orion.patient.util.exception.PatientNotFoundException;
 import com.orion.patient.mapper.PatientMapper;
 import com.orion.patient.repository.PatientRepository;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,9 +29,10 @@ public class PatientService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<PatientDTO> findById(Long id) {
+    public PatientDTO findById(Long id) {
         return patientRepository.findById(id)
-                .map(patientMapper::toDTO);
+                .map(patientMapper::toDTO)
+                .orElseThrow(() -> new PatientNotFoundException("Patient with ID " + id + " not found"));
     }
 
     public PatientDTO save(PatientDTO patientDTO) {
@@ -48,5 +50,14 @@ public class PatientService {
 
     public boolean patientExists(PatientDTO patientDTO) {
         return patientRepository.existsByEmailOrPhoneNumber(patientDTO.email(), patientDTO.phoneNumber());
+    }
+
+    public void registerPatient(PatientDTO patientDTO) {
+        if (patientExists(patientDTO)) {
+            throw new DuplicatePatientException("Patient with this email or phone number already exists");
+        }
+
+        PatientEntity patientEntity = patientMapper.toEntity(patientDTO);
+        patientRepository.save(patientEntity);
     }
 }

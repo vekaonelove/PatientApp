@@ -49,4 +49,7 @@ public class PatientEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contact_id", referencedColumnName = "id", insertable = false, updatable = false)
     private EmergencyContactEntity contact;
+
+    @Column(name = "contact_id", nullable = false)
+    private Long contactId;
 }

@@ -5,6 +5,5 @@ public record EmergencyContactDTO(
         String name,
         String phoneNumber,
         String additionalContact,
-        Long patientId,
         String relation
 ) {}

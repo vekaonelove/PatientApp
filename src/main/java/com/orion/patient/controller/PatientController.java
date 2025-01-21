@@ -24,14 +24,6 @@ public class PatientController {
         return new ResponseEntity<>(patients, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PatientDTO> getPatientById(@PathVariable Long id) {
-        Optional<PatientDTO> patientDTO = patientService.findById(id);
-        return patientDTO
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
     @PostMapping
     public ResponseEntity<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
         PatientDTO createdPatient = patientService.save(patientDTO);

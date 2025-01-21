@@ -58,4 +58,11 @@ security:
 application:
   name: PatientApplication
 
+#KEY CLOAK
+# Keycloak configuration
+  keycloak:
+    auth-server-url=http://localhost:8080/auth
+    realm=your-realm-name
+    resource=your-client-id
+    public-client=true
 

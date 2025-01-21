@@ -7,10 +7,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface EmergencyContactMapper {
-
-    @Mapping(source = "patient.id", target = "patientId")
     EmergencyContactDTO toDTO(EmergencyContactEntity emergencyContactEntity);
-
-    @Mapping(source = "patientId", target = "patient.id")
     EmergencyContactEntity toEntity(EmergencyContactDTO emergencyContactDTO);
 }
