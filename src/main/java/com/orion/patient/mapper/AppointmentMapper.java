@@ -9,9 +9,13 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface AppointmentMapper {
 
+    @Mapping(target = "documentId", source = "document.id")
+    @Mapping(target = "diseaseId", source = "disease.id")
     @Mapping(source = "patient.id", target = "patientId")
     AppointmentDTO toDTO(AppointmentEntity entity);
 
+    @Mapping(target = "document.id", source = "documentId")
+    @Mapping(target = "disease.id", source = "diseaseId")
     @Mapping(source = "patientId", target = "patient.id")
     AppointmentEntity toEntity(AppointmentDTO dto);
 }

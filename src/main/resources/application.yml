@@ -22,19 +22,45 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
     open-in-view: true
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: ${OAUTH2_CLIENT_ID:backend_client}
+            client-secret: ${OAUTH2_CLIENT_SECRET:xkVPF7uByBIFKElC5bM8OXJCoaoUiRPG}
+            authorization-grant-type: client_credentials
+            scope: openid, profile, email
+        provider:
+          keycloak:
+            token-uri: ${KEYCLOAK_URL}realms/${KEYCLOAK_REALM}/protocol/openid-connect/token
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://10.1.11.26:8282/realms/auth/protocol/openid-connect/certs
+    devtools:
+      restart:false
 
-  # ----------------------
-  # LIQUIBASE CONFIGURATION
-  # ----------------------
+    auth:
+      token:
+        secret: ${AUTH_TOKEN_SECRET:mySuperSecretKeyDontShare}
+        expiry-hours: ${AUTH_TOKEN_EXPIRY_HOURS:2}
+        encrypt-secret: ${AUTH_TOKEN_ENCRYPT_SECRET:myEncryptionPassphrase}
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+
+
+
+# ----------------------
+# LIQUIBASE CONFIGURATION
+# ----------------------
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
     contexts: dev,prod
 
-  mvc:
-    view:
-      prefix: /WEB-INF/jsp/
-      suffix: = .jsp
+
 
 # ----------------------
 # LOGGING CONFIGURATION
@@ -46,23 +72,9 @@ logging:
   file:
     name: logs/patient-application.log
 
-# ----------------------
-# SECURITY CONFIGURATION (OPTIONAL)
-# ----------------------
-security:
-  enabled: true
 
 # ----------------------
-# OTHER CONFIGURATION
+# APPLICATION CONFIGURATION
 # ----------------------
 application:
   name: PatientApplication
-
-#KEY CLOAK
-# Keycloak configuration
-  keycloak:
-    auth-server-url=http://localhost:8080/auth
-    realm=your-realm-name
-    resource=your-client-id
-    public-client=true
-

@@ -1,0 +1,68 @@
+{
+  "properties": [
+    {
+      "name": "keycloak.realm",
+      "type": "java.lang.String",
+      "description": "Description for keycloak.realm."
+    },
+    {
+      "name": "keycloak.auth-server-url",
+      "type": "java.lang.String",
+      "description": "Description for keycloak.auth-server-url."
+    },
+    {
+      "name": "keycloak.resource",
+      "type": "java.lang.String",
+      "description": "Description for keycloak.resource."
+    },
+    {
+      "name": "keycloak.credentials.secret",
+      "type": "java.lang.String",
+      "description": "Description for keycloak.credentials.secret."
+    },
+    {
+      "name": "keycloak.use-resource-role-mappings",
+      "type": "java.lang.String",
+      "description": "Description for keycloak.use-resource-role-mappings."
+    },
+    {
+      "name": "liquibase.enabled",
+      "type": "java.lang.String",
+      "description": "Description for liquibase.enabled."
+    },
+    {
+      "name": "liquibase.change-log",
+      "type": "java.lang.String",
+      "description": "Description for liquibase.change-log."
+    },
+    {
+      "name": "liquibase.contexts",
+      "type": "java.lang.String",
+      "description": "Description for liquibase.contexts."
+    },
+    {
+      "name": "application.name",
+      "type": "java.lang.String",
+      "description": "Description for application.name."
+    },
+    {
+      "name": "spring.security.devtools",
+      "type": "java.lang.String",
+      "description": "Description for spring.security.devtools."
+    },
+    {
+      "name": "spring.security.auth.token.expiry-hours",
+      "type": "java.lang.String",
+      "description": "Description for spring.security.auth.token.expiry-hours."
+    },
+    {
+      "name": "spring.security.auth.token.secret",
+      "type": "java.lang.String",
+      "description": "Description for spring.security.auth.token.secret."
+    },
+    {
+      "name": "spring.security.auth.token.encrypt-secret",
+      "type": "java.lang.String",
+      "description": "Description for spring.security.auth.token.encrypt-secret."
+    }
+  ] }

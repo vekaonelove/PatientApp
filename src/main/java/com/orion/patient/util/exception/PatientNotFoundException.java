@@ -13,8 +13,4 @@ public class PatientNotFoundException extends RuntimeException {
     public PatientNotFoundException(Throwable cause) {
         super(cause);
     }
-
-    public PatientNotFoundException() {
-        super("Patient not found in the database. Invalid id");
-    }
 }

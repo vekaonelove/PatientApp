@@ -41,7 +41,26 @@ dependencies {
     
     // Database and Liquibase dependencies
     implementation 'mysql:mysql-connector-java:8.0.28'
-    implementation 'org.liquibase:liquibase-core:4.23.0'
+    implementation 'org.liquibase:liquibase-core:4.23.0'// Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    dependencies {
+        // Spring Security
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+
+        // Spring Security OAuth2 Resource Server
+        implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
+        // Keycloak Spring Boot Adapter
+        implementation 'org.keycloak:keycloak-spring-boot-starter:20.0.5'
+    }
+
+
+    // Spring Security OAuth2 Resource Server
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
+    // Keycloak Spring Boot Adapter
+    implementation 'org.keycloak:keycloak-spring-boot-starter:20.0.5'
 
     // Jakarta validation dependencies
     implementation 'jakarta.validation:jakarta.validation-api:3.0.0'

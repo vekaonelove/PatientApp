@@ -51,13 +51,4 @@ public class PatientService {
     public boolean patientExists(PatientDTO patientDTO) {
         return patientRepository.existsByEmailOrPhoneNumber(patientDTO.email(), patientDTO.phoneNumber());
     }
-
-    public void registerPatient(PatientDTO patientDTO) {
-        if (patientExists(patientDTO)) {
-            throw new DuplicatePatientException("Patient with this email or phone number already exists");
-        }
-
-        PatientEntity patientEntity = patientMapper.toEntity(patientDTO);
-        patientRepository.save(patientEntity);
-    }
 }

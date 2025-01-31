@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -34,7 +34,17 @@ public class AppointmentEntity {
     private Long clinicId;
 
     @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "disease_id", nullable = false)
+    private DiseaseEntity disease;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "document_id", nullable = false)
+    private DocumentEntity document;
+
+    @NotNull
     @Column(name = "appointment_date", nullable = false)
-    private Instant appointmentDate;
+    private LocalDateTime appointmentTime;
 
 }

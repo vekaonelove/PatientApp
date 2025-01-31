@@ -7,6 +7,7 @@ import com.orion.patient.repository.AppointmentRepository;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,13 +42,49 @@ public class AppointmentService {
     }
 
     public AppointmentDTO update(Long id, @Valid AppointmentDTO appointmentDTO) {
-        AppointmentEntity appointmentEntity = appointmentMapper.toEntity(appointmentDTO);
-        appointmentEntity.setId(id);
-        AppointmentEntity updatedAppointment = appointmentRepository.save(appointmentEntity);
+        boolean isAvailable = isDoctorAvailable(
+                appointmentDTO.doctorId(),
+                appointmentDTO.clinicId(),
+                appointmentDTO.appointmentTime()
+        );
+
+        if (!isAvailable) {
+            throw new RuntimeException("Doctor is not available at the specified time.");
+        }
+
+        Optional<AppointmentEntity> existingAppointmentOpt = appointmentRepository.findById(id);
+        if (!existingAppointmentOpt.isPresent()) {
+            throw new RuntimeException("Appointment with ID " + id + " not found.");
+        }
+
+        AppointmentEntity existingAppointment = existingAppointmentOpt.get();
+        existingAppointment.setDoctorId(appointmentDTO.doctorId());
+        existingAppointment.setClinicId(appointmentDTO.clinicId());
+        existingAppointment.setAppointmentTime(appointmentDTO.appointmentTime());
+
+        AppointmentEntity updatedAppointment = appointmentRepository.save(existingAppointment);
         return appointmentMapper.toDTO(updatedAppointment);
     }
 
     public void delete(Long id) {
         appointmentRepository.deleteById(id);
+    }
+
+    public List<AppointmentDTO> getAppointmentsForPatient(Long patientId) {
+        List<AppointmentEntity> appointments = appointmentRepository.findByPatientId(patientId);
+        return appointments.stream()
+                .map(appointmentMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public boolean isDoctorAvailable(Long doctorId, Long clinicId, LocalDateTime appointmentTime) {
+        return !appointmentRepository.existsByDoctorIdAndClinicIdAndAppointmentTime(
+                doctorId, clinicId, appointmentTime
+        );
+    }
+
+    public void createAppointment(AppointmentDTO appointmentDTO) {
+        AppointmentEntity appointmentEntity = appointmentMapper.toEntity(appointmentDTO);
+        appointmentRepository.save(appointmentEntity);
     }
 }

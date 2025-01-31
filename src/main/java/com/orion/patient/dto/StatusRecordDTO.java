@@ -9,5 +9,5 @@ public record StatusRecordDTO(
         Long patientId,
         String statusName,
 
-        @PastOrPresent
+        @PastOrPresent(message = "The date should be in past or present")
         Instant updateDate) { }

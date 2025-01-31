@@ -17,7 +17,6 @@ import lombok.Setter;
 @Entity(name = "document_types")
 public class DocumentTypeEntity {
     @Id
-    @Size(max = 255)
     @Column(name = "type", nullable = false)
     private String type;
 

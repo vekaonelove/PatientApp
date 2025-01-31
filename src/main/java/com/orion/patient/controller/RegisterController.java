@@ -1,7 +1,6 @@
 package com.orion.patient.controller;
 
 import com.orion.patient.dto.PatientDTO;
-import com.orion.patient.dto.PatientLoginDTO;
 import com.orion.patient.service.PatientService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping()
-public class AuthorizationController {
+public class RegisterController {
 
     private final PatientService patientService;
-    public AuthorizationController(PatientService patientService) {
+    public RegisterController(PatientService patientService) {
         this.patientService = patientService;
     }
 
