@@ -1,6 +1,6 @@
 package com.orion.patient.dto;
 
-public record EmergencyContactDTO(
+public record EmergencyContactDto(
         Long id,
         String name,
         String phoneNumber,

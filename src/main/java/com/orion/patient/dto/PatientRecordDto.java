@@ -1,11 +1,10 @@
 package com.orion.patient.dto;
 
-import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.Instant;
 
-public record PatientRecordDTO(
+public record PatientRecordDto(
         Long id,
         Long patientId,
         Long diseaseId,

@@ -1,6 +1,6 @@
 package com.orion.patient.service;
 
-import com.orion.patient.dto.PatientStatusDTO;
+import com.orion.patient.dto.PatientStatusDto;
 import com.orion.patient.entity.PatientStatusEntity;
 import com.orion.patient.mapper.PatientStatusMapper;
 import com.orion.patient.repository.PatientStatusRepository;
@@ -21,29 +21,29 @@ public class PatientStatusService {
         this.patientStatusMapper = patientStatusMapper;
     }
 
-    public List<PatientStatusDTO> findAll() {
+    public List<PatientStatusDto> findAll() {
         List<PatientStatusEntity> patientStatuses = patientStatusRepository.findAll();
         return patientStatuses.stream()
-                .map(patientStatusMapper::toDTO)
+                .map(patientStatusMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<PatientStatusDTO> findByStatus(String status) {
+    public Optional<PatientStatusDto> findByStatus(String status) {
         Optional<PatientStatusEntity> patientStatusEntity = patientStatusRepository.findById(status);
-        return patientStatusEntity.map(patientStatusMapper::toDTO);
+        return patientStatusEntity.map(patientStatusMapper::toDto);
     }
 
-    public PatientStatusDTO save(PatientStatusDTO patientStatusDTO) {
+    public PatientStatusDto save(PatientStatusDto patientStatusDTO) {
         PatientStatusEntity patientStatusEntity = patientStatusMapper.toEntity(patientStatusDTO);
         PatientStatusEntity savedPatientStatus = patientStatusRepository.save(patientStatusEntity);
-        return patientStatusMapper.toDTO(savedPatientStatus);
+        return patientStatusMapper.toDto(savedPatientStatus);
     }
 
-    public PatientStatusDTO update(String status, @Valid PatientStatusDTO patientStatusDTO) {
+    public PatientStatusDto update(String status, @Valid PatientStatusDto patientStatusDTO) {
         PatientStatusEntity patientStatusEntity = patientStatusMapper.toEntity(patientStatusDTO);
         patientStatusEntity.setStatus(status);
         PatientStatusEntity updatedPatientStatus = patientStatusRepository.save(patientStatusEntity);
-        return patientStatusMapper.toDTO(updatedPatientStatus);
+        return patientStatusMapper.toDto(updatedPatientStatus);
     }
 
     public void delete(String status) {

@@ -1,12 +1,11 @@
 package com.orion.patient.mapper;
 
-import com.orion.patient.dto.EmergencyContactDTO;
+import com.orion.patient.dto.EmergencyContactDto;
 import com.orion.patient.entity.EmergencyContactEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface EmergencyContactMapper {
-    EmergencyContactDTO toDTO(EmergencyContactEntity emergencyContactEntity);
-    EmergencyContactEntity toEntity(EmergencyContactDTO emergencyContactDTO);
+    EmergencyContactDto toDto(EmergencyContactEntity emergencyContactEntity);
+    EmergencyContactEntity toEntity(EmergencyContactDto emergencyContactDTO);
 }

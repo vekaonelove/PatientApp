@@ -1,12 +1,14 @@
 package com.orion.patient.service;
 
-import com.orion.patient.dto.PatientDTO;
+import com.orion.patient.dto.PatientDto;
 import com.orion.patient.entity.PatientEntity;
-import com.orion.patient.util.exception.DuplicatePatientException;
-import com.orion.patient.util.exception.PatientNotFoundException;
+import com.orion.patient.util.exception.PatientApplicationException;
 import com.orion.patient.mapper.PatientMapper;
 import com.orion.patient.repository.PatientRepository;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,33 +24,33 @@ public class PatientService {
         this.patientMapper = patientMapper;
     }
 
-    public List<PatientDTO> findAll() {
-        return patientRepository.findAll()
-                .stream()
-                .map(patientMapper::toDTO)
-                .collect(Collectors.toList());
+    public Page<PatientDto> getPatients(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<PatientEntity> patientPage = patientRepository.findAll(pageable);
+
+        return patientPage.map(patientMapper::toDto);
     }
 
-    public PatientDTO findById(Long id) {
+    public PatientDto getPatient(Long id) {
         return patientRepository.findById(id)
-                .map(patientMapper::toDTO)
-                .orElseThrow(() -> new PatientNotFoundException("Patient with ID " + id + " not found"));
+                .map(patientMapper::toDto)
+                .orElseThrow(() -> new PatientApplicationException("Patient with ID " + id + " not found"));
     }
 
-    public PatientDTO save(PatientDTO patientDTO) {
+    public PatientDto save(PatientDto patientDTO) {
         PatientEntity patientEntity = patientMapper.toEntity(patientDTO);
         PatientEntity savedPatient = patientRepository.save(patientEntity);
-        return patientMapper.toDTO(savedPatient);
+        return patientMapper.toDto(savedPatient);
     }
 
-    public PatientDTO update(Long id, @Valid PatientDTO patientDTO) {
+    public PatientDto update(Long id, @Valid PatientDto patientDTO) {
         PatientEntity patientEntity = patientMapper.toEntity(patientDTO);
         patientEntity.setId(id);
         PatientEntity updatedEntity = patientRepository.save(patientEntity);
-        return patientMapper.toDTO(updatedEntity);
+        return patientMapper.toDto(updatedEntity);
     }
 
-    public boolean patientExists(PatientDTO patientDTO) {
+    public boolean patientExists(PatientDto patientDTO) {
         return patientRepository.existsByEmailOrPhoneNumber(patientDTO.email(), patientDTO.phoneNumber());
     }
 }

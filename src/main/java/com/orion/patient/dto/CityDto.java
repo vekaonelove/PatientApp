@@ -1,7 +1,8 @@
 package com.orion.patient.dto;
 
-public record CityDTO(
+public record CityDto(
         Long id,
-        Long countryId,
+        Long countryName,
         String name) {
 }
+

@@ -1,6 +1,6 @@
 package com.orion.patient.service;
 
-import com.orion.patient.dto.PatientRecordDTO;
+import com.orion.patient.dto.PatientRecordDto;
 import com.orion.patient.entity.PatientRecordEntity;
 import com.orion.patient.mapper.PatientRecordMapper;
 import com.orion.patient.repository.PatientRecordRepository;
@@ -21,29 +21,29 @@ public class PatientRecordService {
         this.patientRecordMapper = patientRecordMapper;
     }
 
-    public List<PatientRecordDTO> findAll() {
+    public List<PatientRecordDto> findAll() {
         List<PatientRecordEntity> records = patientRecordRepository.findAll();
         return records.stream()
-                .map(patientRecordMapper::toDTO)
+                .map(patientRecordMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<PatientRecordDTO> findById(Long id) {
+    public Optional<PatientRecordDto> findById(Long id) {
         Optional<PatientRecordEntity> recordEntity = patientRecordRepository.findById(id);
-        return recordEntity.map(patientRecordMapper::toDTO);
+        return recordEntity.map(patientRecordMapper::toDto);
     }
 
-    public PatientRecordDTO save(PatientRecordDTO patientRecordDTO) {
+    public PatientRecordDto save(PatientRecordDto patientRecordDTO) {
         PatientRecordEntity patientRecordEntity = patientRecordMapper.toEntity(patientRecordDTO);
         PatientRecordEntity savedEntity = patientRecordRepository.save(patientRecordEntity);
-        return patientRecordMapper.toDTO(savedEntity);
+        return patientRecordMapper.toDto(savedEntity);
     }
 
-    public PatientRecordDTO update(Long id, @Valid PatientRecordDTO patientRecordDTO) {
+    public PatientRecordDto update(Long id, @Valid PatientRecordDto patientRecordDTO) {
         PatientRecordEntity patientRecordEntity = patientRecordMapper.toEntity(patientRecordDTO);
         patientRecordEntity.setId(id);
         PatientRecordEntity updatedEntity = patientRecordRepository.save(patientRecordEntity);
-        return patientRecordMapper.toDTO(updatedEntity);
+        return patientRecordMapper.toDto(updatedEntity);
     }
 
     public void delete(Long id) {

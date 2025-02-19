@@ -1,6 +1,6 @@
 package com.orion.patient.service;
 
-import com.orion.patient.dto.PaymentStatusDTO;
+import com.orion.patient.dto.PaymentStatusDto;
 import com.orion.patient.entity.PaymentStatusEntity;
 import com.orion.patient.mapper.PaymentStatusMapper;
 import com.orion.patient.repository.PaymentStatusRepository;
@@ -21,29 +21,29 @@ public class PaymentStatusService {
         this.paymentStatusMapper = paymentStatusMapper;
     }
 
-    public List<PaymentStatusDTO> findAll() {
+    public List<PaymentStatusDto> findAll() {
         List<PaymentStatusEntity> paymentStatuses = paymentStatusRepository.findAll();
         return paymentStatuses.stream()
-                .map(paymentStatusMapper::toDTO)
+                .map(paymentStatusMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<PaymentStatusDTO> findById(String status) {
+    public Optional<PaymentStatusDto> findById(String status) {
         Optional<PaymentStatusEntity> paymentStatusEntity = paymentStatusRepository.findById(status);
-        return paymentStatusEntity.map(paymentStatusMapper::toDTO);
+        return paymentStatusEntity.map(paymentStatusMapper::toDto);
     }
 
-    public PaymentStatusDTO save(PaymentStatusDTO paymentStatusDTO) {
+    public PaymentStatusDto save(PaymentStatusDto paymentStatusDTO) {
         PaymentStatusEntity paymentStatusEntity = paymentStatusMapper.toEntity(paymentStatusDTO);
         PaymentStatusEntity savedPaymentStatus = paymentStatusRepository.save(paymentStatusEntity);
-        return paymentStatusMapper.toDTO(savedPaymentStatus);
+        return paymentStatusMapper.toDto(savedPaymentStatus);
     }
 
-    public PaymentStatusDTO update(String status, @Valid PaymentStatusDTO paymentStatusDTO) {
+    public PaymentStatusDto update(String status, @Valid PaymentStatusDto paymentStatusDTO) {
         PaymentStatusEntity paymentStatusEntity = paymentStatusMapper.toEntity(paymentStatusDTO);
         paymentStatusEntity.setStatus(status);
         PaymentStatusEntity updatedEntity = paymentStatusRepository.save(paymentStatusEntity);
-        return paymentStatusMapper.toDTO(updatedEntity);
+        return paymentStatusMapper.toDto(updatedEntity);
     }
 
     public void delete(String status) {

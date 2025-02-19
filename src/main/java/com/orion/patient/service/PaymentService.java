@@ -1,6 +1,6 @@
 package com.orion.patient.service;
 
-import com.orion.patient.dto.PaymentDTO;
+import com.orion.patient.dto.PaymentDto;
 import com.orion.patient.entity.PaymentEntity;
 import com.orion.patient.mapper.PaymentMapper;
 import com.orion.patient.repository.PaymentRepository;
@@ -21,29 +21,29 @@ public class PaymentService {
         this.paymentMapper = paymentMapper;
     }
 
-    public List<PaymentDTO> findAll() {
+    public List<PaymentDto> findAll() {
         List<PaymentEntity> payments = paymentRepository.findAll();
         return payments.stream()
-                .map(paymentMapper::toDTO)
+                .map(paymentMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<PaymentDTO> findById(Long id) {
+    public Optional<PaymentDto> findById(Long id) {
         Optional<PaymentEntity> paymentEntity = paymentRepository.findById(id);
-        return paymentEntity.map(paymentMapper::toDTO);
+        return paymentEntity.map(paymentMapper::toDto);
     }
 
-    public PaymentDTO save(PaymentDTO paymentDTO) {
+    public PaymentDto save(PaymentDto paymentDTO) {
         PaymentEntity paymentEntity = paymentMapper.toEntity(paymentDTO);
         PaymentEntity savedPayment = paymentRepository.save(paymentEntity);
-        return paymentMapper.toDTO(savedPayment);
+        return paymentMapper.toDto(savedPayment);
     }
 
-    public PaymentDTO update(Long id, @Valid PaymentDTO paymentDTO) {
+    public PaymentDto update(Long id, @Valid PaymentDto paymentDTO) {
         PaymentEntity paymentEntity = paymentMapper.toEntity(paymentDTO);
         paymentEntity.setId(id);
         PaymentEntity updatedPayment = paymentRepository.save(paymentEntity);
-        return paymentMapper.toDTO(updatedPayment);
+        return paymentMapper.toDto(updatedPayment);
     }
 
     public void delete(Long id) {

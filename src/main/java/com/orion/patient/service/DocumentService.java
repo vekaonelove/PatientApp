@@ -1,6 +1,6 @@
 package com.orion.patient.service;
 
-import com.orion.patient.dto.DocumentDTO;
+import com.orion.patient.dto.DocumentDto;
 import com.orion.patient.entity.DocumentEntity;
 import com.orion.patient.mapper.DocumentMapper;
 import com.orion.patient.repository.DocumentRepository;
@@ -22,29 +22,29 @@ public class DocumentService {
         this.documentMapper = documentMapper;
     }
 
-    public List<DocumentDTO> findAll() {
+    public List<DocumentDto> findAll() {
         List<DocumentEntity> documents = documentRepository.findAll();
         return documents.stream()
-                .map(documentMapper::toDTO)
+                .map(documentMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<DocumentDTO> findById(Long id) {
+    public Optional<DocumentDto> findById(Long id) {
         Optional<DocumentEntity> documentEntity = documentRepository.findById(id);
-        return documentEntity.map(documentMapper::toDTO);
+        return documentEntity.map(documentMapper::toDto);
     }
 
-    public DocumentDTO save(DocumentDTO documentDTO) {
+    public DocumentDto save(DocumentDto documentDTO) {
         DocumentEntity documentEntity = documentMapper.toEntity(documentDTO);
         DocumentEntity savedDocument = documentRepository.save(documentEntity);
-        return documentMapper.toDTO(savedDocument);
+        return documentMapper.toDto(savedDocument);
     }
 
-    public DocumentDTO update(Long id, @Valid DocumentDTO documentDTO) {
+    public DocumentDto update(Long id, @Valid DocumentDto documentDTO) {
         DocumentEntity documentEntity = documentMapper.toEntity(documentDTO);
         documentEntity.setId(id);
         DocumentEntity updatedDocument = documentRepository.save(documentEntity);
-        return documentMapper.toDTO(updatedDocument);
+        return documentMapper.toDto(updatedDocument);
     }
 
     public void delete(Long id) {

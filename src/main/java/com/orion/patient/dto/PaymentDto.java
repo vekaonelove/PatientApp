@@ -1,6 +1,6 @@
 package com.orion.patient.dto;
 
-public record PaymentDTO(
+public record PaymentDto(
         Long id,
         Long appointmentId,
         String statusName,

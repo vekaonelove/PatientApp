@@ -1,14 +1,8 @@
-# ----------------------
-# SERVER CONFIGURATION
-# ----------------------
 server:
   port: 8080
   servlet:
     context-path: /
 
-# ----------------------
-# DATABASE CONFIGURATION
-# ----------------------
 spring:
   datasource:
     url: jdbc:mysql://${HOST:localhost}:${PORT:3306}/patient?createDatabaseIfNotExist=true
@@ -50,21 +44,11 @@ spring:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
 
-
-
-# ----------------------
-# LIQUIBASE CONFIGURATION
-# ----------------------
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
     contexts: dev,prod
 
-
-
-# ----------------------
-# LOGGING CONFIGURATION
-# ----------------------
 logging:
   level:
     org.springframework: INFO
@@ -72,9 +56,6 @@ logging:
   file:
     name: logs/patient-application.log
 
-
-# ----------------------
-# APPLICATION CONFIGURATION
-# ----------------------
 application:
   name: PatientApplication
+

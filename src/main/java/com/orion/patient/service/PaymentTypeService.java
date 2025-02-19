@@ -1,6 +1,6 @@
 package com.orion.patient.service;
 
-import com.orion.patient.dto.PaymentTypeDTO;
+import com.orion.patient.dto.PaymentTypeDto;
 import com.orion.patient.entity.PaymentTypeEntity;
 import com.orion.patient.mapper.PaymentTypeMapper;
 import com.orion.patient.repository.PaymentTypeRepository;
@@ -22,29 +22,29 @@ public class PaymentTypeService {
         this.paymentTypeMapper = paymentTypeMapper;
     }
 
-    public List<PaymentTypeDTO> findAll() {
+    public List<PaymentTypeDto> findAll() {
         List<PaymentTypeEntity> paymentTypes = paymentTypeRepository.findAll();
         return paymentTypes.stream()
-                .map(paymentTypeMapper::toDTO)
+                .map(paymentTypeMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<PaymentTypeDTO> findById(String type) {
+    public Optional<PaymentTypeDto> findById(String type) {
         Optional<PaymentTypeEntity> paymentTypeEntity = paymentTypeRepository.findById(type);
-        return paymentTypeEntity.map(paymentTypeMapper::toDTO);
+        return paymentTypeEntity.map(paymentTypeMapper::toDto);
     }
 
-    public PaymentTypeDTO save(PaymentTypeDTO paymentTypeDTO) {
+    public PaymentTypeDto save(PaymentTypeDto paymentTypeDTO) {
         PaymentTypeEntity paymentTypeEntity = paymentTypeMapper.toEntity(paymentTypeDTO);
         PaymentTypeEntity savedPaymentType = paymentTypeRepository.save(paymentTypeEntity);
-        return paymentTypeMapper.toDTO(savedPaymentType);
+        return paymentTypeMapper.toDto(savedPaymentType);
     }
 
-    public PaymentTypeDTO update(String type, @Valid PaymentTypeDTO paymentTypeDTO) {
+    public PaymentTypeDto update(String type, @Valid PaymentTypeDto paymentTypeDTO) {
         PaymentTypeEntity paymentTypeEntity = paymentTypeMapper.toEntity(paymentTypeDTO);
         paymentTypeEntity.setType(type);
         PaymentTypeEntity updatedEntity = paymentTypeRepository.save(paymentTypeEntity);
-        return paymentTypeMapper.toDTO(updatedEntity);
+        return paymentTypeMapper.toDto(updatedEntity);
     }
 
     public void delete(String type) {

@@ -1,7 +1,6 @@
 package com.orion.patient.util;
 
-import com.orion.patient.util.exception.DuplicatePatientException;
-import com.orion.patient.util.exception.PatientNotFoundException;
+import com.orion.patient.util.exception.PatientApplicationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -9,14 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(PatientNotFoundException.class)
-    public ResponseEntity<String> handlePatientNotFoundException(PatientNotFoundException ex) {
+    @ExceptionHandler(PatientApplicationException.class)
+    public ResponseEntity<String> handlePatientNotFoundException(PatientApplicationException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(DuplicatePatientException.class)
-    public ResponseEntity<String> handleDuplicatePatientException(DuplicatePatientException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

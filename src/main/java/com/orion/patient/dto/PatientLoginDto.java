@@ -3,7 +3,7 @@ package com.orion.patient.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 
-public record PatientLoginDTO(
+public record PatientLoginDto(
         Long id,
 
         @Email

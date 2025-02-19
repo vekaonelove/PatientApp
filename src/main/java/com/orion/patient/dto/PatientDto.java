@@ -3,10 +3,12 @@ package com.orion.patient.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 
 import java.util.Date;
 
-public record PatientDTO(
+@Builder
+public record PatientDto(
         Long id,
 
         @Email(message = "The email format is incorrect. Follow: example@gmail.com")

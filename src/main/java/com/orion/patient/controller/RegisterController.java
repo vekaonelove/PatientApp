@@ -1,8 +1,9 @@
 package com.orion.patient.controller;
 
-import com.orion.patient.dto.PatientDTO;
+import com.orion.patient.dto.PatientDto;
 import com.orion.patient.service.PatientService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,39 +11,27 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping()
 public class RegisterController {
 
-    private final PatientService patientService;
-    public RegisterController(PatientService patientService) {
-        this.patientService = patientService;
-    }
+    @Autowired
+    private PatientService patientService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerPatient(
-            @RequestHeader("Authorization") String authorizationHeader,
-            @Valid @RequestBody PatientDTO patientDTO) {
-
-        if (authorizationHeader == null || authorizationHeader.isBlank()){
-            return ResponseEntity.status(401).body("Missing or invalid Authorization token");
-        }
+    public ResponseEntity<?> registerPatient(
+            @Valid @RequestBody PatientDto patientDTO) {
 
         if (patientService.patientExists(patientDTO)) {
             return ResponseEntity.badRequest().body("Patient already exists");
         }
 
-        patientService.save(patientDTO);
-        return ResponseEntity.ok("Patient registered successfully");
+        PatientDto savedPatient = patientService.save(patientDTO);
+
+        return ResponseEntity.status(201).body("Patient registered successfully with ID: " + savedPatient.id());
     }
 
-
-    @GetMapping("/me")
+    @GetMapping("/patient-profile")
     public ResponseEntity<?> getPatientProfile(
-            @RequestHeader("Authorization") String authorizationHeader,
             @RequestParam("id") Long id) {
 
-        if (authorizationHeader == null || authorizationHeader.isBlank() || !authorizationHeader.startsWith("Bearer ")) {
-            return ResponseEntity.status(401).body("Missing or invalid Authorization token");
-        }
-
-        PatientDTO patientDTO = patientService.findById(id);
+        PatientDto patientDTO = patientService.getPatient(id);
         return ResponseEntity.ok(patientDTO);
     }
 }

@@ -1,11 +1,11 @@
 package com.orion.patient.mapper;
 
-import com.orion.patient.dto.DocumentTypeDTO;
+import com.orion.patient.dto.DocumentTypeDto;
 import com.orion.patient.entity.DocumentTypeEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface DocumentTypeMapper {
-    DocumentTypeDTO toDTO(DocumentTypeEntity documentTypeEntity);
-    DocumentTypeEntity toEntity(DocumentTypeDTO documentTypeDTO);
+    DocumentTypeDto toDto(DocumentTypeEntity documentTypeEntity);
+    DocumentTypeEntity toEntity(DocumentTypeDto documentTypeDTO);
 }

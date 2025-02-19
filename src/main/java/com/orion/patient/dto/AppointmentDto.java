@@ -2,10 +2,9 @@ package com.orion.patient.dto;
 
 import jakarta.validation.constraints.FutureOrPresent;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
-public record AppointmentDTO(
+public record AppointmentDto(
         Long id,
         Long patientId,
         Long doctorId,

@@ -1,6 +1,6 @@
 package com.orion.patient.service;
 
-import com.orion.patient.dto.CountryDTO;
+import com.orion.patient.dto.CountryDto;
 import com.orion.patient.entity.CountryEntity;
 import com.orion.patient.mapper.CountryMapper;
 import com.orion.patient.repository.CountryRepository;
@@ -22,29 +22,29 @@ public class CountryService {
         this.countryMapper = countryMapper;
     }
 
-    public List<CountryDTO> findAll() {
+    public List<CountryDto> findAll() {
         List<CountryEntity> countries = countryRepository.findAll();
         return countries.stream()
-                .map(countryMapper::toDTO)
+                .map(countryMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<CountryDTO> findByName(String name) {
+    public Optional<CountryDto> findByName(String name) {
         Optional<CountryEntity> countryEntity = Optional.ofNullable(countryRepository.findByName(name));
-        return countryEntity.map(countryMapper::toDTO);
+        return countryEntity.map(countryMapper::toDto);
     }
 
-    public CountryDTO save(CountryDTO countryDTO) {
+    public CountryDto save(CountryDto countryDTO) {
         CountryEntity countryEntity = countryMapper.toEntity(countryDTO);
         CountryEntity savedCountry = countryRepository.save(countryEntity);
-        return countryMapper.toDTO(savedCountry);
+        return countryMapper.toDto(savedCountry);
     }
 
-    public CountryDTO update(String name, @Valid CountryDTO countryDTO) {
+    public CountryDto update(String name, @Valid CountryDto countryDTO) {
         CountryEntity countryEntity = countryMapper.toEntity(countryDTO);
         countryEntity.setName(name);
         CountryEntity updatedCountry = countryRepository.save(countryEntity);
-        return countryMapper.toDTO(updatedCountry);
+        return countryMapper.toDto(updatedCountry);
     }
 
     public void delete(String name) {

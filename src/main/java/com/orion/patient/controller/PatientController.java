@@ -1,9 +1,11 @@
 package com.orion.patient.controller;
 
-import com.orion.patient.dto.AppointmentDTO;
-import com.orion.patient.dto.PatientDTO;
+import com.orion.patient.dto.AppointmentDto;
+import com.orion.patient.dto.PatientDto;
 import com.orion.patient.service.AppointmentService;
 import com.orion.patient.service.PatientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,41 +17,40 @@ import java.util.List;
 @Validated
 public class PatientController {
 
-    private final PatientService patientService;
-    private final AppointmentService appointmentService;
+    @Autowired
+    private PatientService patientService;
 
-    public PatientController(PatientService patientService, AppointmentService appointmentService) {
-        this.patientService = patientService;
-        this.appointmentService = appointmentService;
-    }
+    @Autowired
+    private AppointmentService appointmentService;
 
     @GetMapping
-    public ResponseEntity<List<PatientDTO>> getAllPatients() {
-        List<PatientDTO> patients = patientService.findAll();
-        return ResponseEntity.ok(patients);
+    public Page<PatientDto> getPatients(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return patientService.getPatients(page, size);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PatientDTO> getPatientById(@PathVariable Long id) {
-        PatientDTO patient = patientService.findById(id);
+    public ResponseEntity<PatientDto> getPatientById(@PathVariable Long id) {
+        PatientDto patient = patientService.getPatient(id);
         return ResponseEntity.ok(patient);
     }
 
     @PostMapping
-    public ResponseEntity<PatientDTO> savePatient(@RequestBody PatientDTO patientDTO) {
-        PatientDTO savedPatient = patientService.save(patientDTO);
+    public ResponseEntity<PatientDto> savePatient(@RequestBody PatientDto patientDTO) {
+        PatientDto savedPatient = patientService.save(patientDTO);
         return ResponseEntity.ok(savedPatient);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PatientDTO> updatePatient(@PathVariable Long id, @RequestBody PatientDTO patientDTO) {
-        PatientDTO updatedPatient = patientService.update(id, patientDTO);
+    @PatchMapping("/{id}")
+    public ResponseEntity<PatientDto> updatePatient(@PathVariable Long id, @RequestBody PatientDto patientDTO) {
+        PatientDto updatedPatient = patientService.update(id, patientDTO);
         return ResponseEntity.ok(updatedPatient);
     }
 
     @GetMapping("/{id}/appointments")
-    public ResponseEntity<List<AppointmentDTO>> getAppointmentsForPatient(@PathVariable Long id) {
-        List<AppointmentDTO> appointments = appointmentService.getAppointmentsForPatient(id);
+    public ResponseEntity<List<AppointmentDto>> getAppointmentsForPatient(@PathVariable Long id) {
+        List<AppointmentDto> appointments = appointmentService.getAppointmentsForPatient(id);
         return ResponseEntity.ok(appointments);
     }
 }

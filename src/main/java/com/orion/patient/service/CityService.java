@@ -1,6 +1,6 @@
 package com.orion.patient.service;
 
-import com.orion.patient.dto.CityDTO;
+import com.orion.patient.dto.CityDto;
 import com.orion.patient.entity.CityEntity;
 import com.orion.patient.mapper.CityMapper;
 import com.orion.patient.repository.CityRepository;
@@ -22,29 +22,29 @@ public class CityService {
         this.cityMapper = cityMapper;
     }
 
-    public List<CityDTO> findAll() {
+    public List<CityDto> findAll() {
         List<CityEntity> cities = cityRepository.findAll();
         return cities.stream()
-                .map(cityMapper::toDTO)
+                .map(cityMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<CityDTO> findById(Long id) {
+    public Optional<CityDto> findById(Long id) {
         Optional<CityEntity> cityEntity = cityRepository.findById(id);
-        return cityEntity.map(cityMapper::toDTO);
+        return cityEntity.map(cityMapper::toDto);
     }
 
-    public CityDTO save(CityDTO cityDTO) {
+    public CityDto save(CityDto cityDTO) {
         CityEntity cityEntity = cityMapper.toEntity(cityDTO);
         CityEntity savedCity = cityRepository.save(cityEntity);
-        return cityMapper.toDTO(savedCity);
+        return cityMapper.toDto(savedCity);
     }
 
-    public CityDTO update(Long id, @Valid CityDTO cityDTO) {
+    public CityDto update(Long id, @Valid CityDto cityDTO) {
         CityEntity cityEntity = cityMapper.toEntity(cityDTO);
         cityEntity.setId(id);
         CityEntity updatedCity = cityRepository.save(cityEntity);
-        return cityMapper.toDTO(updatedCity);
+        return cityMapper.toDto(updatedCity);
     }
 
     public void delete(Long id) {

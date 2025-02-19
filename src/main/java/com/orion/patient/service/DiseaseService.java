@@ -1,6 +1,6 @@
 package com.orion.patient.service;
 
-import com.orion.patient.dto.DiseaseDTO;
+import com.orion.patient.dto.DiseaseDto;
 import com.orion.patient.entity.DiseaseEntity;
 import com.orion.patient.mapper.DiseaseMapper;
 import com.orion.patient.repository.DiseaseRepository;
@@ -22,29 +22,29 @@ public class DiseaseService {
         this.diseaseMapper = diseaseMapper;
     }
 
-    public List<DiseaseDTO> findAll() {
+    public List<DiseaseDto> findAll() {
         List<DiseaseEntity> diseases = diseaseRepository.findAll();
         return diseases.stream()
-                .map(diseaseMapper::toDTO)
+                .map(diseaseMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<DiseaseDTO> findById(Long id) {
+    public Optional<DiseaseDto> findById(Long id) {
         Optional<DiseaseEntity> diseaseEntity = diseaseRepository.findById(id);
-        return diseaseEntity.map(diseaseMapper::toDTO);
+        return diseaseEntity.map(diseaseMapper::toDto);
     }
 
-    public DiseaseDTO save(DiseaseDTO diseaseDTO) {
+    public DiseaseDto save(DiseaseDto diseaseDTO) {
         DiseaseEntity diseaseEntity = diseaseMapper.toEntity(diseaseDTO);
         DiseaseEntity savedDisease = diseaseRepository.save(diseaseEntity);
-        return diseaseMapper.toDTO(savedDisease);
+        return diseaseMapper.toDto(savedDisease);
     }
 
-    public DiseaseDTO update(Long id, @Valid DiseaseDTO diseaseDTO) {
+    public DiseaseDto update(Long id, @Valid DiseaseDto diseaseDTO) {
         DiseaseEntity diseaseEntity = diseaseMapper.toEntity(diseaseDTO);
         diseaseEntity.setId(id);
         DiseaseEntity updatedDisease = diseaseRepository.save(diseaseEntity);
-        return diseaseMapper.toDTO(updatedDisease);
+        return diseaseMapper.toDto(updatedDisease);
     }
 
     public void delete(Long id) {

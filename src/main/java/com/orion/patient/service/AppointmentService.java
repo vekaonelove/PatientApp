@@ -1,9 +1,10 @@
 package com.orion.patient.service;
 
-import com.orion.patient.dto.AppointmentDTO;
+import com.orion.patient.dto.AppointmentDto;
 import com.orion.patient.entity.AppointmentEntity;
 import com.orion.patient.mapper.AppointmentMapper;
 import com.orion.patient.repository.AppointmentRepository;
+import com.orion.patient.util.exception.PatientApplicationException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
@@ -23,38 +24,38 @@ public class AppointmentService {
         this.appointmentMapper = appointmentMapper;
     }
 
-    public List<AppointmentDTO> findAll() {
+    public List<AppointmentDto> findAll() {
         List<AppointmentEntity> appointments = appointmentRepository.findAll();
         return appointments.stream()
-                .map(appointmentMapper::toDTO)
+                .map(appointmentMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<AppointmentDTO> findById(Long id) {
+    public Optional<AppointmentDto> findById(Long id) {
         Optional<AppointmentEntity> appointmentEntity = appointmentRepository.findById(id);
-        return appointmentEntity.map(appointmentMapper::toDTO);
+        return appointmentEntity.map(appointmentMapper::toDto);
     }
 
-    public AppointmentDTO save(AppointmentDTO appointmentDTO) {
+    public AppointmentDto save(AppointmentDto appointmentDTO) {
         AppointmentEntity appointmentEntity = appointmentMapper.toEntity(appointmentDTO);
         AppointmentEntity savedAppointment = appointmentRepository.save(appointmentEntity);
-        return appointmentMapper.toDTO(savedAppointment);
+        return appointmentMapper.toDto(savedAppointment);
     }
 
-    public AppointmentDTO update(Long id, @Valid AppointmentDTO appointmentDTO) {
-        boolean isAvailable = isDoctorAvailable(
+    public AppointmentDto update(Long id, @Valid AppointmentDto appointmentDTO) {
+        boolean isAvailable = isDoctorNotAvailable(
                 appointmentDTO.doctorId(),
                 appointmentDTO.clinicId(),
                 appointmentDTO.appointmentTime()
         );
 
         if (!isAvailable) {
-            throw new RuntimeException("Doctor is not available at the specified time.");
+            throw new PatientApplicationException("Doctor is not available at the specified time.");
         }
 
         Optional<AppointmentEntity> existingAppointmentOpt = appointmentRepository.findById(id);
-        if (!existingAppointmentOpt.isPresent()) {
-            throw new RuntimeException("Appointment with ID " + id + " not found.");
+        if (existingAppointmentOpt.isEmpty()) {
+            throw new PatientApplicationException("Appointment with ID " + id + " not found.");
         }
 
         AppointmentEntity existingAppointment = existingAppointmentOpt.get();
@@ -63,27 +64,27 @@ public class AppointmentService {
         existingAppointment.setAppointmentTime(appointmentDTO.appointmentTime());
 
         AppointmentEntity updatedAppointment = appointmentRepository.save(existingAppointment);
-        return appointmentMapper.toDTO(updatedAppointment);
+        return appointmentMapper.toDto(updatedAppointment);
     }
 
     public void delete(Long id) {
         appointmentRepository.deleteById(id);
     }
 
-    public List<AppointmentDTO> getAppointmentsForPatient(Long patientId) {
+    public List<AppointmentDto> getAppointmentsForPatient(Long patientId) {
         List<AppointmentEntity> appointments = appointmentRepository.findByPatientId(patientId);
         return appointments.stream()
-                .map(appointmentMapper::toDTO)
+                .map(appointmentMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public boolean isDoctorAvailable(Long doctorId, Long clinicId, LocalDateTime appointmentTime) {
-        return !appointmentRepository.existsByDoctorIdAndClinicIdAndAppointmentTime(
+    public boolean isDoctorNotAvailable(Long doctorId, Long clinicId, LocalDateTime appointmentTime) {
+        return appointmentRepository.existsByDoctorIdAndClinicIdAndAppointmentTime(
                 doctorId, clinicId, appointmentTime
         );
     }
 
-    public void createAppointment(AppointmentDTO appointmentDTO) {
+    public void createAppointment(AppointmentDto appointmentDTO) {
         AppointmentEntity appointmentEntity = appointmentMapper.toEntity(appointmentDTO);
         appointmentRepository.save(appointmentEntity);
     }

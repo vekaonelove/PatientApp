@@ -27,3 +27,6 @@ public class CityEntity {
     @Column(name = "name", nullable = false)
     private String name;
 }
+//TODO delete city, country (ony leave ids in FKs),  get this from Kar
+//TODO only leave optional name for cities, transfer that to Karolina
+//TODO graphQL - ?

@@ -1,6 +1,6 @@
 package com.orion.patient.service;
 
-import com.orion.patient.dto.EmergencyContactDTO;
+import com.orion.patient.dto.EmergencyContactDto;
 import com.orion.patient.entity.EmergencyContactEntity;
 import com.orion.patient.mapper.EmergencyContactMapper;
 import com.orion.patient.repository.EmergencyContactRepository;
@@ -21,32 +21,32 @@ public class EmergencyContactService {
         this.emergencyContactMapper = emergencyContactMapper;
     }
 
-    public List<EmergencyContactDTO> findAll() {
+    public List<EmergencyContactDto> findAll() {
         List<EmergencyContactEntity> emergencyContacts = emergencyContactRepository.findAll();
         return emergencyContacts.stream()
-                .map(emergencyContactMapper::toDTO)
+                .map(emergencyContactMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<EmergencyContactDTO> findById(Long id) {
+    public Optional<EmergencyContactDto> findById(Long id) {
         Optional<EmergencyContactEntity> emergencyContactEntity = emergencyContactRepository.findById(id);
-        return emergencyContactEntity.map(emergencyContactMapper::toDTO);
+        return emergencyContactEntity.map(emergencyContactMapper::toDto);
     }
 
-    public EmergencyContactDTO save(EmergencyContactDTO emergencyContactDTO) {
+    public EmergencyContactDto save(EmergencyContactDto emergencyContactDTO) {
         EmergencyContactEntity emergencyContactEntity = emergencyContactMapper.toEntity(emergencyContactDTO);
         EmergencyContactEntity savedEntity = emergencyContactRepository.save(emergencyContactEntity);
-        return emergencyContactMapper.toDTO(savedEntity);
+        return emergencyContactMapper.toDto(savedEntity);
     }
 
-    public EmergencyContactDTO update(Long id, @Valid EmergencyContactDTO emergencyContactDTO) {
+    public EmergencyContactDto update(Long id, @Valid EmergencyContactDto emergencyContactDTO) {
         if (!emergencyContactRepository.existsById(id)) {
             return null;
         }
         EmergencyContactEntity emergencyContactEntity = emergencyContactMapper.toEntity(emergencyContactDTO);
         emergencyContactEntity.setId(id);
         EmergencyContactEntity updatedEntity = emergencyContactRepository.save(emergencyContactEntity);
-        return emergencyContactMapper.toDTO(updatedEntity);
+        return emergencyContactMapper.toDto(updatedEntity);
     }
 
     public void delete(Long id) {

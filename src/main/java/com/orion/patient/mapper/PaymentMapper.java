@@ -1,6 +1,6 @@
 package com.orion.patient.mapper;
 
-import com.orion.patient.dto.PaymentDTO;
+import com.orion.patient.dto.PaymentDto;
 import com.orion.patient.entity.PaymentEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,10 +11,10 @@ public interface PaymentMapper {
     @Mapping(target = "statusName", source = "paymentStatus.status")
     @Mapping(target = "paymentType", source = "paymentType.type")
     @Mapping(target = "appointmentId", source = "appointment.id")
-    PaymentDTO toDTO(PaymentEntity paymentEntity);
+    PaymentDto toDto(PaymentEntity paymentEntity);
 
     @Mapping(target = "paymentStatus.status", source = "statusName")
     @Mapping(target = "paymentType.type", source = "paymentType")
     @Mapping(target = "appointment.id", source = "appointmentId")
-    PaymentEntity toEntity(PaymentDTO paymentDTO);
+    PaymentEntity toEntity(PaymentDto paymentDTO);
 }

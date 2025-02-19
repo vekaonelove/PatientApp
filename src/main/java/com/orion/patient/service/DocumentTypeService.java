@@ -1,6 +1,6 @@
 package com.orion.patient.service;
 
-import com.orion.patient.dto.DocumentTypeDTO;
+import com.orion.patient.dto.DocumentTypeDto;
 import com.orion.patient.entity.DocumentTypeEntity;
 import com.orion.patient.mapper.DocumentTypeMapper;
 import com.orion.patient.repository.DocumentTypeRepository;
@@ -22,29 +22,29 @@ public class DocumentTypeService {
         this.documentTypeMapper = documentTypeMapper;
     }
 
-    public List<DocumentTypeDTO> findAll() {
+    public List<DocumentTypeDto> findAll() {
         List<DocumentTypeEntity> documentTypes = documentTypeRepository.findAll();
         return documentTypes.stream()
-                .map(documentTypeMapper::toDTO)
+                .map(documentTypeMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<DocumentTypeDTO> findByName(String name) {
+    public Optional<DocumentTypeDto> findByName(String name) {
         Optional<DocumentTypeEntity> documentTypeEntity = documentTypeRepository.findByType(name);
-        return documentTypeEntity.map(documentTypeMapper::toDTO);
+        return documentTypeEntity.map(documentTypeMapper::toDto);
     }
 
-    public DocumentTypeDTO save(DocumentTypeDTO documentTypeDTO) {
+    public DocumentTypeDto save(DocumentTypeDto documentTypeDTO) {
         DocumentTypeEntity documentTypeEntity = documentTypeMapper.toEntity(documentTypeDTO);
         DocumentTypeEntity savedDocumentType = documentTypeRepository.save(documentTypeEntity);
-        return documentTypeMapper.toDTO(savedDocumentType);
+        return documentTypeMapper.toDto(savedDocumentType);
     }
 
-    public DocumentTypeDTO update(String type, @Valid DocumentTypeDTO documentTypeDTO) {
+    public DocumentTypeDto update(String type, @Valid DocumentTypeDto documentTypeDTO) {
         DocumentTypeEntity documentTypeEntity = documentTypeMapper.toEntity(documentTypeDTO);
         documentTypeEntity.setType(type);
         DocumentTypeEntity updatedDocumentType = documentTypeRepository.save(documentTypeEntity);
-        return documentTypeMapper.toDTO(updatedDocumentType);
+        return documentTypeMapper.toDto(updatedDocumentType);
     }
 
     public void delete(String name) {
