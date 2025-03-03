@@ -1,10 +1,12 @@
 package com.orion.patient.controller;
 
 import com.orion.patient.dto.PatientDto;
+import com.orion.patient.kafka.KafkaProducerService;
 import com.orion.patient.service.PatientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,6 +15,7 @@ public class RegisterController {
 
     @Autowired
     private PatientService patientService;
+    private KafkaProducerService kafkaProducerService;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerPatient(
@@ -21,6 +24,7 @@ public class RegisterController {
         if (patientService.patientExists(patientDTO)) {
             return ResponseEntity.badRequest().body("Patient already exists");
         }
+
 
         PatientDto savedPatient = patientService.save(patientDTO);
 

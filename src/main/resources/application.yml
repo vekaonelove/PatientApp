@@ -8,6 +8,19 @@ spring:
     url: jdbc:mysql://${HOST:localhost}:${PORT:3306}/patient?createDatabaseIfNotExist=true
     username: ${USER:root}
     password: ${PASSWORD:1234}
+
+  spring:
+    kafka:
+      bootstrap-servers: localhost:9092
+      producer:
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      consumer:
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        group-id: app-group
+
+
   jpa:
     hibernate:
       ddl-auto: update
