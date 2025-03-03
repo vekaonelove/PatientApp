@@ -15,9 +15,11 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: 10.1.11.34:9092://kafka-1:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:29092,OUTSIDE://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
 
   app-service:
     build:
@@ -26,6 +28,6 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092  # Inside Docker Network, Use Internal Port!
     depends_on:
       - kafka
